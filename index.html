@@ -1,0 +1,739 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second Conditional Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                        url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1600&q=80') center/cover fixed;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .instructions {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .example {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 40px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #28a745, #34d399);
+            transition: width 0.5s ease, background 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 20px;
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .stat-box {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .stat-correct {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .stat-incorrect {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .stat-remaining {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-number {
+            text-align: center;
+            font-size: 1.4em;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #333;
+            text-align: center;
+        }
+
+        .verb-hint {
+            display: inline-block;
+            background: #fff3cd;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #856404;
+            font-family: 'Courier New', monospace;
+        }
+
+        .answer-group {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .answer-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .answer-label {
+            font-weight: bold;
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        .answer-input {
+            padding: 15px;
+            border: 3px solid #ddd;
+            border-radius: 12px;
+            font-size: 1.2em;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            transform: scale(1.02);
+        }
+
+        .answer-input.correct {
+            border-color: #28a745;
+            background: #d4edda;
+            animation: correctPulse 0.5s ease;
+        }
+
+        .answer-input.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .correct-answer-display {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #d4edda;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+            color: #155724;
+            font-weight: bold;
+            animation: slideIn 0.3s ease;
+        }
+
+        .correct-answer-display.show {
+            display: block;
+        }
+
+        /* Buttons */
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            font-size: 1.4em;
+            padding: 20px 50px;
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            display: none;
+        }
+
+        .next-btn.show {
+            display: inline-block;
+        }
+
+        /* Score */
+        .final-score {
+            text-align: center;
+            padding: 40px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .final-score.show {
+            display: block;
+        }
+
+        .score-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+
+        .score-text {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        .score-details {
+            font-size: 1.3em;
+            color: #1b5e20;
+            margin-bottom: 30px;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        #startSection {
+            display: block;
+        }
+
+        #quizSection {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .question-text {
+                font-size: 1.1em;
+            }
+
+            button {
+                padding: 15px 30px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Second Conditional Quiz</h1>
+        <p class="subtitle">Master the art of "If + Past Simple, would + infinitive"</p>
+
+        <!-- Start Section -->
+        <div id="startSection">
+            <div class="instructions">
+                <h3 style="color: #667eea; margin-bottom: 15px;">📚 Instructions:</h3>
+                <p style="margin: 10px 0; line-height: 1.8;">Complete the sentences with the correct form of the verbs in brackets to make <strong>second conditional sentences</strong>.</p>
+                <p style="margin: 10px 0; color: #764ba2; font-weight: bold;">Formula: If + Past Simple, would + infinitive</p>
+                
+                <div class="example">
+                    <strong>Example:</strong><br>
+                    If he <u>was</u> hungry, he <u>would have</u> breakfast. <span class="verb-hint">(be / have)</span>
+                </div>
+                <div class="example">
+                    <strong>Example:</strong><br>
+                    If you <u>put</u> on your glasses, you <u>would see</u> much better. <span class="verb-hint">(put / see)</span>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="start-btn" onclick="startQuiz()">🚀 Start Quiz</button>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quizSection">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-text" id="progressText">Question 1 of 10</div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar" id="progressBar">0%</div>
+                </div>
+                <div class="progress-stats">
+                    <div class="stat-box stat-correct">
+                        ✓ Correct: <span id="correctCount">0</span>
+                    </div>
+                    <div class="stat-box stat-incorrect">
+                        ✗ Incorrect: <span id="incorrectCount">0</span>
+                    </div>
+                    <div class="stat-box stat-remaining">
+                        ⏳ Remaining: <span id="remainingCount">10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div id="questionCard"></div>
+
+            <!-- Buttons -->
+            <div class="button-container">
+                <button onclick="checkAnswer()">✓ Check Answer</button>
+                <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+            </div>
+
+            <!-- Final Score -->
+            <div class="final-score" id="finalScore">
+                <div class="score-icon" id="scoreIcon">🎉</div>
+                <div class="score-text" id="scoreText"></div>
+                <div class="score-details" id="scoreDetails"></div>
+                <button class="restart-btn" onclick="location.reload()">🔄 Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="correctSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZSA0PVqzn77BdGAg+l9r0yoEsBS6Czv" type="audio/wav">
+    </audio>
+    <audio id="incorrectSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA" type="audio/wav">
+    </audio>
+    <audio id="completeSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZSA0PVqzn77BdGAg+l9r0yoEsBS6Czv" type="audio/wav">
+    </audio>
+
+    <script>
+        // 100 Second Conditional Questions
+        const questionBank = [
+            { question: "If I ___ rich, I ___ a mansion.", verbs: "(be / buy)", answers: ["were", "would buy"] },
+            { question: "If she ___ more time, she ___ you.", verbs: "(have / help)", answers: ["had", "would help"] },
+            { question: "___ you ___ me if I ___ you?", verbs: "(help / ask)", answers: ["Would", "help", "asked"] },
+            { question: "If they ___ harder, they ___ the exam.", verbs: "(study / pass)", answers: ["studied", "would pass"] },
+            { question: "If it ___ sunny, we ___ to the beach.", verbs: "(be / go)", answers: ["were", "would go"] },
+            { question: "If I ___ a car, I ___ to work.", verbs: "(have / drive)", answers: ["had", "would drive"] },
+            { question: "She ___ happier if she ___ a new job.", verbs: "(be / find)", answers: ["would be", "found"] },
+            { question: "If we ___ in Paris, we ___ the Louvre every year.", verbs: "(live / visit)", answers: ["lived", "would visit"] },
+            { question: "___ you ___ a sports car if you ___ money now?", verbs: "(buy / have)", answers: ["Would", "buy", "had"] },
+            { question: "I ___ millions of people if I ___ a billionaire.", verbs: "(help / be)", answers: ["would help", "were"] },
+            
+            { question: "If you ___ on your glasses, you ___ much better.", verbs: "(put / see)", answers: ["put", "would see"] },
+            { question: "If he ___ the truth, he ___ in trouble.", verbs: "(tell / be)", answers: ["told", "would be"] },
+            { question: "They ___ the game if they ___ together.", verbs: "(win / work)", answers: ["would win", "worked"] },
+            { question: "If she ___ English, she ___ a better job.", verbs: "(speak / get)", answers: ["spoke", "would get"] },
+            { question: "If I ___ you, I ___ that.", verbs: "(be / not do)", answers: ["were", "wouldn't do"] },
+            { question: "We ___ late if we ___ now.", verbs: "(not be / leave)", answers: ["wouldn't be", "left"] },
+            { question: "___ she ___ angry if you ___ her?", verbs: "(be / tell)", answers: ["Would", "be", "told"] },
+            { question: "If they ___ harder, they ___ more money.", verbs: "(work / earn)", answers: ["worked", "would earn"] },
+            { question: "If it ___, we ___ the picnic.", verbs: "(rain / cancel)", answers: ["rained", "would cancel"] },
+            { question: "I ___ the answer if I ___ it.", verbs: "(tell / know)", answers: ["would tell", "knew"] },
+            
+            { question: "If she ___ a dog, she ___ for walks daily.", verbs: "(have / go)", answers: ["had", "would go"] },
+            { question: "If we ___ more space, we ___ a bigger table.", verbs: "(have / buy)", answers: ["had", "would buy"] },
+            { question: "___ you ___ me if I ___ help?", verbs: "(call / need)", answers: ["Would", "call", "needed"] },
+            { question: "If he ___ smoking, he ___ healthier.", verbs: "(stop / be)", answers: ["stopped", "would be"] },
+            { question: "They ___ the movie if they ___ tickets.", verbs: "(watch / have)", answers: ["would watch", "had"] },
+            { question: "If I ___ tired, I ___ to bed early.", verbs: "(feel / go)", answers: ["felt", "would go"] },
+            { question: "She ___ the dress if it ___ cheaper.", verbs: "(buy / be)", answers: ["would buy", "were"] },
+            { question: "If we ___ a map, we ___ lost.", verbs: "(have / not get)", answers: ["had", "wouldn't get"] },
+            { question: "___ it ___ better if we ___ tomorrow?", verbs: "(be / meet)", answers: ["Would", "be", "met"] },
+            { question: "If you ___ the instructions, you ___ mistakes.", verbs: "(read / not make)", answers: ["read", "wouldn't make"] },
+            
+            { question: "If he ___ in shape, he ___ the marathon.", verbs: "(be / run)", answers: ["were", "would run"] },
+            { question: "I ___ more if I ___ less busy.", verbs: "(exercise / be)", answers: ["would exercise", "were"] },
+            { question: "If they ___ the problem, they ___ it.", verbs: "(understand / solve)", answers: ["understood", "would solve"] },
+            { question: "She ___ better grades if she ___ more.", verbs: "(get / study)", answers: ["would get", "studied"] },
+            { question: "___ you ___ to Japan if you ___ the chance?", verbs: "(go / have)", answers: ["Would", "go", "had"] },
+            { question: "If it ___ so expensive, I ___ it.", verbs: "(not be / buy)", answers: ["weren't", "would buy"] },
+            { question: "We ___ the project if we ___ more time.", verbs: "(finish / have)", answers: ["would finish", "had"] },
+            { question: "If he ___ the bus, he ___ late.", verbs: "(miss / be)", answers: ["missed", "would be"] },
+            { question: "They ___ you if they ___ your number.", verbs: "(call / know)", answers: ["would call", "knew"] },
+            { question: "If I ___ a garden, I ___ vegetables.", verbs: "(have / grow)", answers: ["had", "would grow"] },
+            
+            { question: "She ___ happier if she ___ closer to her family.", verbs: "(be / live)", answers: ["would be", "lived"] },
+            { question: "If you ___ harder, you ___ better results.", verbs: "(try / get)", answers: ["tried", "would get"] },
+            { question: "___ he ___ the job if they ___ it to him?", verbs: "(take / offer)", answers: ["Would", "take", "offered"] },
+            { question: "If we ___ more money, we ___ on vacation.", verbs: "(save / go)", answers: ["saved", "would go"] },
+            { question: "I ___ a new phone if mine ___.", verbs: "(buy / break)", answers: ["would buy", "broke"] },
+            { question: "If they ___ the recipe, the food ___ better.", verbs: "(follow / taste)", answers: ["followed", "would taste"] },
+            { question: "She ___ to the party if she ___ invited.", verbs: "(come / be)", answers: ["would come", "were"] },
+            { question: "If it ___ colder, we ___ ice skating.", verbs: "(be / go)", answers: ["were", "would go"] },
+            { question: "___ you ___ afraid if you ___ a ghost?", verbs: "(be / see)", answers: ["Would", "be", "saw"] },
+            { question: "If he ___ the guitar, he ___ in a band.", verbs: "(play / join)", answers: ["played", "would join"] },
+            
+            { question: "We ___ the house if it ___ perfect.", verbs: "(buy / be)", answers: ["would buy", "were"] },
+            { question: "If I ___ a million dollars, I ___ around the world.", verbs: "(win / travel)", answers: ["won", "would travel"] },
+            { question: "They ___ us if they ___ the news.", verbs: "(tell / hear)", answers: ["would tell", "heard"] },
+            { question: "If she ___ cooking, she ___ a chef.", verbs: "(enjoy / become)", answers: ["enjoyed", "would become"] },
+            { question: "___ it ___ easier if we ___ a plan?", verbs: "(be / make)", answers: ["Would", "be", "made"] },
+            { question: "If you ___ more water, you ___ better.", verbs: "(drink / feel)", answers: ["drank", "would feel"] },
+            { question: "He ___ the race if he ___ faster.", verbs: "(win / run)", answers: ["would win", "ran"] },
+            { question: "If we ___ a bigger car, we ___ everyone.", verbs: "(have / take)", answers: ["had", "would take"] },
+            { question: "I ___ you the book if I ___ it.", verbs: "(lend / have)", answers: ["would lend", "had"] },
+            { question: "If they ___ the museum, they ___ it interesting.", verbs: "(visit / find)", answers: ["visited", "would find"] },
+            
+            { question: "She ___ to concerts if she ___ music more.", verbs: "(go / like)", answers: ["would go", "liked"] },
+            { question: "If he ___ more confident, he ___ for the role.", verbs: "(be / apply)", answers: ["were", "would apply"] },
+            { question: "___ you ___ surprised if I ___ you the truth?", verbs: "(be / tell)", answers: ["Would", "be", "told"] },
+            { question: "If we ___ the rules, we ___ disqualified.", verbs: "(break / be)", answers: ["broke", "would be"] },
+            { question: "I ___ more books if I ___ more free time.", verbs: "(read / have)", answers: ["would read", "had"] },
+            { question: "If it ___ warmer, we ___ swimming.", verbs: "(be / go)", answers: ["were", "would go"] },
+            { question: "They ___ the meeting if it ___ important.", verbs: "(attend / be)", answers: ["would attend", "were"] },
+            { question: "If she ___ the password, she ___ in.", verbs: "(remember / log)", answers: ["remembered", "would log"] },
+            { question: "We ___ pizza if you ___ it.", verbs: "(order / want)", answers: ["would order", "wanted"] },
+            { question: "___ he ___ the marathon if he ___ every day?", verbs: "(complete / train)", answers: ["Would", "complete", "trained"] },
+            
+            { question: "If I ___ invisible, I ___ many places.", verbs: "(be / explore)", answers: ["were", "would explore"] },
+            { question: "She ___ the course if she ___ enough time.", verbs: "(finish / have)", answers: ["would finish", "had"] },
+            { question: "If they ___ a reservation, they ___ a table.", verbs: "(make / get)", answers: ["made", "would get"] },
+            { question: "___ you ___ nervous if you ___ to perform?", verbs: "(be / have)", answers: ["Would", "be", "had"] },
+            { question: "If we ___ the instructions, we ___ it correctly.", verbs: "(follow / do)", answers: ["followed", "would do"] },
+            { question: "He ___ the assignment if he ___ what to do.", verbs: "(complete / know)", answers: ["would complete", "knew"] },
+            { question: "If I ___ wings, I ___ everywhere.", verbs: "(have / fly)", answers: ["had", "would fly"] },
+            { question: "They ___ more friends if they ___ nicer.", verbs: "(make / be)", answers: ["would make", "were"] },
+            { question: "If she ___ sick, she ___ to the doctor.", verbs: "(feel / go)", answers: ["felt", "would go"] },
+            { question: "We ___ the game if we ___ better.", verbs: "(win / play)", answers: ["would win", "played"] },
+            
+            { question: "___ it ___ fun if we ___ a party?", verbs: "(be / have)", answers: ["Would", "be", "had"] },
+            { question: "If you ___ the lottery, what ___ you ___?", verbs: "(win / would / do)", answers: ["won", "would", "do"] },
+            { question: "I ___ Spanish if I ___ in Spain.", verbs: "(learn / live)", answers: ["would learn", "lived"] },
+            { question: "If he ___ the answer, he ___ his hand.", verbs: "(know / raise)", answers: ["knew", "would raise"] },
+            { question: "They ___ the trip if the weather ___ better.", verbs: "(enjoy / be)", answers: ["would enjoy", "were"] },
+            { question: "If we ___ a pet, we ___ a cat.", verbs: "(get / choose)", answers: ["got", "would choose"] },
+            { question: "She ___ the competition if she ___.", verbs: "(win / participate)", answers: ["would win", "participated"] },
+            { question: "___ you ___ me if I ___ in trouble?", verbs: "(help / be)", answers: ["Would", "help", "were"] },
+            { question: "If I ___ more organized, I ___ so much.", verbs: "(be / not forget)", answers: ["were", "wouldn't forget"] },
+            { question: "He ___ better grades if he ___ attention.", verbs: "(get / pay)", answers: ["would get", "paid"] },
+            
+            { question: "If they ___ the show, they ___ it amazing.", verbs: "(watch / find)", answers: ["watched", "would find"] },
+            { question: "We ___ more successful if we ___ as a team.", verbs: "(be / work)", answers: ["would be", "worked"] },
+            { question: "If she ___ a camera, she ___ beautiful photos.", verbs: "(have / take)", answers: ["had", "would take"] },
+            { question: "___ it ___ strange if he ___ suddenly?", verbs: "(be / leave)", answers: ["Would", "be", "left"] },
+            { question: "If you ___ the opportunity, you ___ it.", verbs: "(have / seize)", answers: ["had", "would seize"] },
+            { question: "I ___ worried if I ___ in your position.", verbs: "(be / be)", answers: ["would be", "were"] },
+            { question: "If we ___ a guide, we ___ more about the city.", verbs: "(have / learn)", answers: ["had", "would learn"] },
+            { question: "They ___ happier if they ___ together.", verbs: "(be / live)", answers: ["would be", "lived"] },
+            { question: "If he ___ the truth, everything ___ clear.", verbs: "(know / be)", answers: ["knew", "would be"] },
+            { question: "She ___ the project if she ___ the resources.", verbs: "(start / have)", answers: ["would start", "had"] }
+        ];
+
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let answeredQuestions = 0;
+        let isChecked = false;
+
+        // Sound functions
+        function playSound(soundId) {
+            const sound = document.getElementById(soundId);
+            sound.currentTime = 0;
+            sound.play().catch(e => console.log('Audio play failed:', e));
+        }
+
+        function startQuiz() {
+            // Select 10 random questions
+            const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
+            currentQuestions = shuffled.slice(0, 10);
+            
+            document.getElementById('startSection').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'block';
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = currentQuestions[currentIndex];
+            const card = document.getElementById('questionCard');
+            
+            isChecked = false;
+            document.getElementById('nextBtn').classList.remove('show');
+            
+            // Replace underscores with input fields
+            let questionHTML = question.question;
+            let inputIndex = 0;
+            
+            questionHTML = questionHTML.replace(/_+/g, function() {
+                const inputHTML = `<input 
+                    type="text" 
+                    class="answer-input inline-input" 
+                    id="answer-${inputIndex}"
+                    data-index="${inputIndex}"
+                    style="width: 150px; display: inline-block; margin: 0 5px; padding: 8px 12px; font-size: 1.1em;"
+                    autocomplete="off"
+                >`;
+                inputIndex++;
+                return inputHTML;
+            });
+            
+            card.innerHTML = `
+                <div class="question-card">
+                    <div class="question-number">Question ${currentIndex + 1} of 10</div>
+                    <div class="question-text" style="line-height: 2.2;">
+                        ${questionHTML}
+                    </div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <span class="verb-hint">${question.verbs}</span>
+                    </div>
+                    <div class="correct-answer-display" id="correctAnswerDisplay">
+                        ✓ Correct answer: <strong>${question.answers.join(', ')}</strong>
+                    </div>
+                </div>
+            `;
+            
+            updateProgress();
+        }
+
+        function checkAnswer() {
+            if (isChecked) return;
+            
+            const question = currentQuestions[currentIndex];
+            let allCorrect = true;
+            
+            question.answers.forEach((correctAnswer, index) => {
+                const input = document.getElementById(`answer-${index}`);
+                const userAnswer = input.value.trim().toLowerCase();
+                const normalizedCorrect = correctAnswer.toLowerCase();
+                
+                if (userAnswer === normalizedCorrect) {
+                    input.classList.add('correct');
+                } else {
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+            
+            if (allCorrect) {
+                correctCount++;
+                playSound('correctSound');
+            } else {
+                incorrectCount++;
+                document.getElementById('correctAnswerDisplay').classList.add('show');
+                playSound('incorrectSound');
+            }
+            
+            answeredQuestions++;
+            isChecked = true;
+            document.getElementById('nextBtn').classList.add('show');
+            updateProgress();
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            
+            if (currentIndex < currentQuestions.length) {
+                showQuestion();
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function updateProgress() {
+            const progressPercent = (answeredQuestions / 10) * 100;
+            const progressBar = document.getElementById('progressBar');
+            
+            progressBar.style.width = progressPercent + '%';
+            progressBar.textContent = Math.round(progressPercent) + '%';
+            
+            // Change color based on performance
+            const successRate = answeredQuestions > 0 ? (correctCount / answeredQuestions) * 100 : 0;
+            if (successRate >= 70) {
+                progressBar.style.background = 'linear-gradient(90deg, #28a745, #34d399)';
+            } else if (successRate >= 50) {
+                progressBar.style.background = 'linear-gradient(90deg, #ffc107, #ffeb3b)';
+            } else {
+                progressBar.style.background = 'linear-gradient(90deg, #dc3545, #ff6b6b)';
+            }
+            
+            document.getElementById('progressText').textContent = `Question ${currentIndex + 1} of 10`;
+            document.getElementById('correctCount').textContent = correctCount;
+            document.getElementById('incorrectCount').textContent = incorrectCount;
+            document.getElementById('remainingCount').textContent = 10 - answeredQuestions;
+        }
+
+        function showFinalScore() {
+            playSound('completeSound');
+            
+            document.getElementById('questionCard').style.display = 'none';
+            document.querySelector('.button-container').style.display = 'none';
+            document.querySelector('.progress-container').style.display = 'none';
+            
+            const finalScore = document.getElementById('finalScore');
+            const percentage = (correctCount / 10) * 100;
+            
+            let icon = '🎉';
+            let message = '';
+            
+            if (percentage === 100) {
+                icon = '🏆';
+                message = 'Perfect Score! Outstanding!';
+            } else if (percentage >= 80) {
+                icon = '🌟';
+                message = 'Excellent Work!';
+            } else if (percentage >= 60) {
+                icon = '👍';
+                message = 'Good Job!';
+            } else if (percentage >= 40) {
+                icon = '📚';
+                message = 'Keep Practicing!';
+            } else {
+                icon = '💪';
+                message = 'Don\'t Give Up!';
+            }
+            
+            document.getElementById('scoreIcon').textContent = icon;
+            document.getElementById('scoreText').textContent = message;
+            document.getElementById('scoreDetails').innerHTML = `
+                You got <strong>${correctCount} out of 10</strong> correct<br>
+                That's <strong>${percentage}%</strong>!
+            `;
+            
+            finalScore.classList.add('show');
+        }
+    </script>
+</body>
+</html>
